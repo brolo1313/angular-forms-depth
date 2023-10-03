@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { UserInfo } from '../../../core/user-info';
 
 @Component({
   selector: 'app-template-forms-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './template-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',
@@ -14,6 +16,20 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TemplateFormsPageComponent implements OnInit {
+
+  userInfo: UserInfo = {
+    firstName: 'Andriy',
+    lastName: '',
+    nickname: '',
+    email: '',
+    yearOfBirth: 0,
+    passport: '',
+    fullAddress: '',
+    city: '',
+    postCode: 0,
+    // password: '',
+    // confirmPassword: '',
+  }
 
   constructor() { }
 

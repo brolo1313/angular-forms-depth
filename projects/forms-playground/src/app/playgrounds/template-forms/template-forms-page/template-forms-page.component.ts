@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { UserInfo } from '../../../core/user-info';
 
 @Component({
@@ -41,4 +41,7 @@ export class TemplateFormsPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onSubmitForm(form:NgForm , e: SubmitEvent){
+    console.log('form-values', form.value);
+  }
 }

@@ -1,47 +1,97 @@
-<form class="form">
-  <p>Form modal state</p>
-  <pre>{{userInfo | json}}</pre>
+<form class="form" #form="ngForm" (ngSubmit)="onSubmitForm(form, $event)" [ngFormOptions]="{updateOn: 'blur'}">
   <div class="form-field">
     <label for="name">First Name</label>
-    <input  [(ngModel)]="userInfo.firstName" name="firstName" type="text" id="name" placeholder="Enter your name">
+    <input
+      [(ngModel)]="userInfo.firstName"
+      name="firstName"
+      type="text"
+      id="name"
+      placeholder="Enter your name"
+    />
   </div>
   <div class="form-field">
     <label for="last-name">Last Name</label>
-    <input  [(ngModel)]="userInfo.lastName" name="lastName"  type="text" id="last-name" placeholder="Enter your last name">
+    <input
+      [(ngModel)]="userInfo.lastName"
+      name="lastName"
+      type="text"
+      id="last-name"
+      placeholder="Enter your last name"
+    />
   </div>
   <div class="form-field">
     <label for="nick-name">Nick Name</label>
-    <input  [(ngModel)]="userInfo.nickname" name="nickname" type="text" id="nick-name" placeholder="Come up with a nick name">
+    <input
+      [(ngModel)]="userInfo.nickname"
+      name="nickname"
+      type="text"
+      id="nick-name"
+      placeholder="Come up with a nick name"
+    />
   </div>
   <div class="form-field">
     <label for="email">Email</label>
-    <input  [(ngModel)]="userInfo.email" name="email" type="email" id="email" placeholder="Provide your email">
+    <input
+      [(ngModel)]="userInfo.email"
+      name="email"
+      type="email"
+      id="email"
+      placeholder="Provide your email"
+    />
   </div>
   <div class="form-field-inline-group">
     <div class="form-field form-field--small">
       <label for="year-of-birth">Year of birth</label>
-      <select  [(ngModel)]="userInfo.yearOfBirth" name="yearOfBirth" id="year-of-birth">
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      <select
+        [(ngModel)]="userInfo.yearOfBirth"
+        name="yearOfBirth"
+        id="year-of-birth"
+      >
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
       </select>
     </div>
     <div class="form-field form-field--small">
       <label for="passport">Passport Number</label>
-      <input  [(ngModel)]="userInfo.passport" name="passport" type="text" id="passport" placeholder="Provide Passport Data">
+      <input
+        [(ngModel)]="userInfo.passport"
+        name="passport"
+        type="text"
+        id="passport"
+        placeholder="Provide Passport Data"
+      />
     </div>
   </div>
-  <fieldset>
+  <fieldset ngModelGroup="address">
     <legend>Address</legend>
     <div class="form-field">
       <label for="full-address">Full Adress</label>
-      <input [(ngModel)]="userInfo.fullAddress" name="fullAddress" type="text" id="full-address" placeholder="Street name and house number">
+      <input
+        [(ngModel)]="userInfo.fullAddress"
+        name="fullAddress"
+        type="text"
+        id="full-address"
+        placeholder="Street name and house number"
+      />
     </div>
     <div class="form-field">
       <label for="city">City</label>
-      <input [(ngModel)]="userInfo.city" name="city" type="text" id="city" placeholder="City">
+      <input
+        [(ngModel)]="userInfo.city"
+        name="city"
+        type="text"
+        id="city"
+        placeholder="City"
+      />
     </div>
     <div class="form-field">
       <label for="post-code">Post Code</label>
-      <input [(ngModel)]="userInfo.postCode" name="postCode" type="number" id="post-code" placeholder="Post code">
+      <input
+        [(ngModel)]="userInfo.postCode"
+        name="postCode"
+        type="number"
+        id="post-code"
+        placeholder="Post code"
+      />
     </div>
   </fieldset>
   <button>Save</button>

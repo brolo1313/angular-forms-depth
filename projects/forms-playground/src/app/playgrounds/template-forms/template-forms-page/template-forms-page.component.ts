@@ -24,7 +24,7 @@ export class TemplateFormsPageComponent implements OnInit {
     email: '',
     yearOfBirth: 0,
     passport: '',
-    fullAddress: '',
+    fullAdress: '',
     city: '',
     postCode: 0,
     // password: '',

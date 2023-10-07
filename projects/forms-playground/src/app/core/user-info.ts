@@ -5,7 +5,7 @@ export interface UserInfo {
     email: string;
     yearOfBirth: number;
     passport: string;
-    fullAddress: string;
+    fullAdress: string;
     city: string;
     postCode: number;
     password?: string;

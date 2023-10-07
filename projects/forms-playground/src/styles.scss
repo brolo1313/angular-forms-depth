@@ -7,6 +7,8 @@
   --color-background: #eceff1;
   --color-text: #263238;
   --color-text-light: #607d8b;
+  --color-error: #ff5722;
+  --color-success: #4caf50;
   --height-header: 64px;
   --height-footer: 48px;
   --border-radius: 10px;
@@ -14,12 +16,20 @@
   --font-size-h1: 34px;
 }
 
-body, html, p, h1, h2, h3, h4, h5, span {
+body,
+html,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+span {
   padding: 0;
   margin: 0;
 }
 body {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   background-color: var(--color-background);
 }
 
@@ -41,7 +51,10 @@ form {
   max-width: 450px;
 }
 
-label, input, fieldset, button {
+label,
+input,
+fieldset,
+button {
   width: 100%;
   box-sizing: border-box;
 }
@@ -76,7 +89,9 @@ legend {
   font-weight: bold;
 }
 
-input, button, select {
+input,
+button,
+select {
   border-radius: 5px;
   font-size: 18px;
   padding: 10px 11px;
@@ -84,4 +99,44 @@ input, button, select {
 
 select {
   width: 100%;
+}
+
+.ng-valid.ng-dirty:not([formGroupName]):not([formArrayName]):not(
+    [ngModelGroup]
+  ):not(form):not(paper-textarea) {
+  border: 2px solid var(--color-success);
+}
+
+.ng-invalid.ng-dirty:not([ngModelGroup="address"]):not(
+    [formGroupName="address"]
+  ):not([formArrayName]):not(form) {
+  border: 2px solid var(--color-error);
+}
+
+
+button[disabled] {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+@keyframes error-message-animation {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.input-error {
+  color: var(--color-error);
+  font-size: 12px;
+  box-sizing: border-box;
+  padding: 2px 13px;
+
+  animation-name: error-message-animation;
+  animation-duration: 300ms;
 }

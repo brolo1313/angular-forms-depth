@@ -45,7 +45,7 @@
       #lastName="ngModel"
       name="last-name"
       type="text"
-      [appBanWords]="['test', 'test_test', 'dummy']"
+      [appBanWords]="isAdult ? ['test', 'test_test', 'dummy'] : []"
       id="last-name"
       placeholder="Enter your last name"
     />
@@ -151,6 +151,7 @@
         #passport="ngModel"
         name="passport"
         type="text"
+        [required]="isAdult"
         id="passport"
         placeholder="Provide Passport Data"
       />
@@ -160,6 +161,7 @@
       >
         Invalid passport number
       </div>
+      <div *ngIf="passport.dirty && passport.hasError('required')" class="input-error">Required for adults</div>
     </div>
   </div>
   <fieldset ngModelGroup="address">

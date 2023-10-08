@@ -4,11 +4,17 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { UserInfo } from '../../../core/user-info';
 import { BanWordsDirective } from '../validators/ban-words.directive';
 import { PasswordShouldMatchedDirective } from '../validators/password-should-matched.directive';
+import { UniqueNicknameDirective } from '../validators/unique-nickname.directive';
 
 @Component({
   selector: 'app-template-forms-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, BanWordsDirective, PasswordShouldMatchedDirective],
+  imports: [
+    CommonModule,
+    FormsModule,
+    BanWordsDirective,
+    PasswordShouldMatchedDirective,
+    UniqueNicknameDirective],
   templateUrl: './template-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',
@@ -48,7 +54,7 @@ export class TemplateFormsPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmitForm(form:NgForm , e: SubmitEvent){
+  onSubmitForm(form: NgForm, e: SubmitEvent) {
     console.log('form-values', form.value);
   }
 }

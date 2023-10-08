@@ -7,6 +7,7 @@
       minlength="4"
       #firstName="ngModel"
       name="first-name"
+      appBanWords="test"
       type="text"
       id="name"
       placeholder="Enter your name"
@@ -26,6 +27,14 @@
       characters, now
       <strong>{{ firstName.getError("minlength").actualLength }}</strong>
     </div>
+    <div
+      *ngIf="firstName.dirty && firstName.hasError('appBanWords')"
+      class="input-error"
+    >
+      The value
+      <strong>{{ firstName.getError("appBanWords").bannedWord }}</strong> is not
+      allowed
+    </div>
   </div>
   <div class="form-field">
     <label for="last-name">Last Name</label>
@@ -36,6 +45,7 @@
       #lastName="ngModel"
       name="last-name"
       type="text"
+      [appBanWords]="['test', 'test_test', 'dummy']"
       id="last-name"
       placeholder="Enter your last name"
     />
@@ -51,8 +61,16 @@
     >
       The length should be at least
       <strong>{{ lastName.getError("minlength").requiredLength }}</strong>
-      characters,  now
+      characters, now
       <strong>{{ lastName.getError("minlength").actualLength }}</strong>
+    </div>
+    <div
+      *ngIf="lastName.dirty && lastName.hasError('appBanWords')"
+      class="input-error"
+    >
+      The value
+      <strong>{{ lastName.getError("appBanWords").bannedWord }}</strong> is not
+      allowed
     </div>
   </div>
   <div class="form-field">

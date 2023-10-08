@@ -80,6 +80,10 @@ button {
     background-color: var(--color-accent-secondary-darker);
     border: var(--color-accent-secondary) 1px solid;
   }
+  &.reset-button {
+    background-color: transparent;
+    border: var(--color-primary) 1px solid;
+  }
 }
 
 input {

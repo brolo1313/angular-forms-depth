@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserInfo } from '../../../core/user-info';
@@ -27,18 +27,23 @@ export class TemplateFormsPageComponent implements OnInit {
 
   userInfo: UserInfo = {
     firstName: 'Andriy',
-    lastName: '',
-    nickname: '',
-    email: '',
-    yearOfBirth: 2022,
-    passport: '',
-    fullAdress: '',
-    city: '',
-    postCode: 0,
+    lastName: 'Yupin',
+    nickname: 'andrew.yupin',
+    email: 'brolo1341@gmail.com',
+    yearOfBirth: 1991,
+    passport: 'AB123456',
+    fullAdress: 'Somestreet 4',
+    city: 'Kiev',
+    postCode: 123456,
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
   }
 
+  @ViewChild(NgForm)
+  formDir!: NgForm;
+
+  private initialFormValues: unknown;
+  
   constructor() { }
 
   get isAdult() {
@@ -54,7 +59,25 @@ export class TemplateFormsPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmitForm(form: NgForm, e: SubmitEvent) {
-    console.log('form-values', form.value);
+  ngAfterViewInit(): void {
+    queueMicrotask(() => {
+      this.initialFormValues = this.formDir.value;
+    })
+  }
+
+  onSubmitForm(e: SubmitEvent) {
+    console.log('The form has been submitted', this.formDir.value);
+    // Strategy 1 - Reset form values, validation statuses, making controls untouched, pristine, etc
+    // form.resetForm();
+    // Strategy 2 - Reset only control statuses but not values.
+    this.formDir.resetForm(this.formDir.value);
+    this.initialFormValues = this.formDir.value;
+
+  }
+
+  onReset(e: Event) {
+    e.preventDefault();
+    this.formDir.resetForm(this.initialFormValues);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }
 }

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserInfo } from '../../../core/user-info';
 import { BanWordsDirective } from '../validators/ban-words.directive';
+import { PasswordShouldMatchedDirective } from '../validators/password-should-matched.directive';
 
 @Component({
   selector: 'app-template-forms-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, BanWordsDirective],
+  imports: [CommonModule, FormsModule, BanWordsDirective, PasswordShouldMatchedDirective],
   templateUrl: './template-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',
@@ -28,8 +29,8 @@ export class TemplateFormsPageComponent implements OnInit {
     fullAdress: '',
     city: '',
     postCode: 0,
-    // password: '',
-    // confirmPassword: '',
+    password: '',
+    confirmPassword: '',
   }
 
   constructor() { }

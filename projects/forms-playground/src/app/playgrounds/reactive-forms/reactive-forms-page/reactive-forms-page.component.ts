@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive-forms-page',
@@ -15,6 +15,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReactiveFormsPageComponent implements OnInit {
+
+  phoneLabels = ['Main', 'Mobile', 'Work', 'Home'];
   
   get years() {
     const now = new Date().getUTCFullYear();
@@ -28,14 +30,41 @@ export class ReactiveFormsPageComponent implements OnInit {
     email: new FormControl('test@gmail.com'),
     yearOfBirth: new FormControl(1991),
     passport: new FormControl(''),
-    fullAddress: new FormControl(''),
-    city: new FormControl(''),
-    postCode: new FormControl(0),
+    address: new FormGroup({
+      fullAddress: new FormControl(''),
+      city: new FormControl(''),
+      postCode: new FormControl(0),
+    }),
+    phones: new FormArray([
+      new FormGroup({
+        label: new FormControl(this.phoneLabels[0]),
+        phone: new FormControl('')
+      })
+    ])
   });
   
   constructor() { }
 
+  addPhone() {
+    this.form.controls.phones.insert(0,
+      new FormGroup({
+        label: new FormControl(this.phoneLabels[0]),
+        phone: new FormControl('')
+      })
+    )
+  }
+
+  removePhone(index: number) {
+    this.form.controls.phones.removeAt(index);
+  }
+
+  onSubmit(e: Event) {
+    console.log(this.form.value);
+  }
+  
   ngOnInit(): void {
   }
+
+  
 
 }

@@ -67,9 +67,7 @@ export class TemplateFormsPageComponent implements OnInit {
 
   onSubmitForm(e: SubmitEvent) {
     console.log('The form has been submitted', this.formDir.value);
-    // Strategy 1 - Reset form values, validation statuses, making controls untouched, pristine, etc
-    // form.resetForm();
-    // Strategy 2 - Reset only control statuses but not values.
+  
     this.formDir.resetForm(this.formDir.value);
     this.initialFormValues = this.formDir.value;
 

@@ -29,10 +29,6 @@
     >
   </div>
 
-  <input
-    [(ngModel)]="searchString"
-    type="text"
-    class="global-search"
-    placeholder="Search"
-  />
+   <!-- <input [(ngModel)]="searchString" (ngModelChange)="findSomething($event)" class="global-search" placeholder="Global Search" type="text"> -->
+   <input [formControl]="reactiveSearchString" class="global-search" placeholder="Global Search" type="text">
 </header>

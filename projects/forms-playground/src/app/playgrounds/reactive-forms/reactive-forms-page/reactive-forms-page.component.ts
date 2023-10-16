@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, tap } from 'rxjs';
+import { UserSkillsService } from '../../../core/user-skills.service';
 
 @Component({
   selector: 'app-reactive-forms-page',
@@ -17,38 +19,54 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } f
 export class ReactiveFormsPageComponent implements OnInit {
 
   phoneLabels = ['Main', 'Mobile', 'Work', 'Home'];
-  
-  get years() {
-    const now = new Date().getUTCFullYear();
-    return Array(now - (now - 40)).fill('').map((_, idx) => now - idx);
-  }
+  years =  this.getYears();
+  skills$!: Observable<string[]>;
 
-  form = new FormGroup({
-    firstName: new FormControl('Andrew'),
-    lastName: new FormControl('Yupin'),
-    nickname: new FormControl(''),
-    email: new FormControl('test@gmail.com'),
-    yearOfBirth: new FormControl(1991),
-    passport: new FormControl(''),
-    address: new FormGroup({
-      fullAddress: new FormControl(''),
-      city: new FormControl(''),
-      postCode: new FormControl(0),
+  form = this.fb.group({
+    firstName: ['Andriy', [Validators.required, Validators.minLength(2)]],
+    lastName: ['Yupin', [Validators.required, Validators.minLength(2)]],
+    nickname: ['',
+    [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.pattern(/^[\w.]+$/)
+    ]
+  ],
+    email: ['brolo1341@gmail.com', [Validators.email, Validators.required]],
+    yearOfBirth: this.fb.nonNullable.control(
+      this.years[this.years.length - 1],
+      Validators.required
+    ),
+    passport: ['', [Validators.pattern(/^[A-Z]{2}[0-9]{6}$/)]],
+    address: this.fb.nonNullable.group({
+      fullAddress: ['', Validators.required],
+      city: ['', Validators.required],
+      postCode: [0, Validators.required]
     }),
-    phones: new FormArray([
-      new FormGroup({
-        label: new FormControl(this.phoneLabels[0]),
-        phone: new FormControl('')
+    phones: this.fb.array([
+      this.fb.group({
+        label: this.fb.nonNullable.control(this.phoneLabels[0]),
+        phone: ''
       })
-    ])
+    ]),
+    skills: this.fb.group({}),
   });
-  
-  constructor() { }
+
+  constructor(
+    private userSkills: UserSkillsService,
+    private fb: FormBuilder
+  ) { }
+
+  ngOnInit(): void {
+    this.skills$ = this.userSkills.getSkills().pipe(
+      tap(skills => this.buildSkillControls(skills))
+    );
+  }
 
   addPhone() {
     this.form.controls.phones.insert(0,
       new FormGroup({
-        label: new FormControl(this.phoneLabels[0]),
+        label: new FormControl(this.phoneLabels[0], { nonNullable: true }),
         phone: new FormControl('')
       })
     )
@@ -61,10 +79,19 @@ export class ReactiveFormsPageComponent implements OnInit {
   onSubmit(e: Event) {
     console.log(this.form.value);
   }
-  
-  ngOnInit(): void {
+
+  private getYears() {
+    const now = new Date().getUTCFullYear();
+    return Array(now - (now - 40)).fill('').map((_, idx) => now - idx);
   }
 
-  
+  private buildSkillControls(skills: string[]) {
+    skills.forEach(skill =>
+      this.form.controls.skills.addControl(
+        skill,
+        new FormControl(false, { nonNullable: true })
+      )
+    );
+  }
 
 }

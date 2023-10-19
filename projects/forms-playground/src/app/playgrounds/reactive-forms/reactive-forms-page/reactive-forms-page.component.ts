@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, tap } from 'rxjs';
 import { UserSkillsService } from '../../../core/user-skills.service';
+import { banWords } from '../validators/ban-word.validator';
+import { passwordShouldMatch } from '../validators/password-match.validator';
 
 @Component({
   selector: 'app-reactive-forms-page',
@@ -23,7 +25,7 @@ export class ReactiveFormsPageComponent implements OnInit {
   skills$!: Observable<string[]>;
 
   form = this.fb.group({
-    firstName: ['Andriy', [Validators.required, Validators.minLength(2)]],
+    firstName: ['Andriy', [Validators.required, Validators.minLength(2), banWords(['test', 'dummy'])]],
     lastName: ['Yupin', [Validators.required, Validators.minLength(2)]],
     nickname: ['',
     [
@@ -50,6 +52,10 @@ export class ReactiveFormsPageComponent implements OnInit {
       })
     ]),
     skills: this.fb.group({}),
+    password: this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: '',
+    }, { validators: passwordShouldMatch})
   });
 
   constructor(

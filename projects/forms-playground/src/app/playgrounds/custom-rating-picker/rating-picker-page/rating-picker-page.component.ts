@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } fr
 import { CommonModule } from '@angular/common';
 import '@polymer/paper-input/paper-textarea';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { EditableContentValueAccessor } from '../value-accessor/editable-content.directive';
 
 @Component({
   selector: 'app-rating-picker-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,EditableContentValueAccessor],
   templateUrl: './rating-picker-page.component.html',
   styleUrls: [
     '../../common-page.scss',

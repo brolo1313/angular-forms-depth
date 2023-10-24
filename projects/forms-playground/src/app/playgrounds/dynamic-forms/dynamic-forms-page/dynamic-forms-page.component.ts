@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DynamicFormConfig } from '../models/dynamic-forms.models';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DynamicControl, DynamicFormConfig } from '../models/dynamic-forms.models';
+import { banWords } from '../../reactive-forms/validators/ban-word.validator';
 
 @Component({
   selector: 'app-dynamic-forms-page',
@@ -39,7 +40,26 @@ export class DynamicFormsPageComponent implements OnInit {
   private buildForm(controls: DynamicFormConfig['controls']) {
     this.form = new FormGroup({});
     Object.keys(controls).forEach(key => {
-      this.form.addControl(key, new FormControl(controls[key].value));
+      const validators = this.resolveValidators(controls[key]);
+      this.form.addControl(key, new FormControl(controls[key].value, validators));
     });
+  }
+  private resolveValidators({ validators = {} }: DynamicControl) {
+    return Object.keys(validators).map(validatorKey => {
+      const validatorValue = validators[validatorKey];
+      if (validatorKey === 'required') {
+        return Validators.required;
+      }
+      if (validatorKey === 'email') {
+        return Validators.email;
+      }
+      if (validatorKey === 'minlength' && typeof validatorValue === 'number') {
+        return Validators.minLength(validatorValue);
+      }
+      if (validatorKey === 'banWords' && Array.isArray(validatorValue)) {
+        return banWords(validatorValue);
+      }
+      return Validators.nullValidator;
+    })
   }
 }

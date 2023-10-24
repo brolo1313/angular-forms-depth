@@ -7,7 +7,10 @@ export interface DynamicOptions {
     type?: string;
     label: string;
     value: T | null;
-    options?: DynamicOptions[];
+    options?: DynamicOptions[],
+    validators?: {
+      [key: string]: unknown;
+    };
   }
   export interface DynamicFormConfig {
     description: string;

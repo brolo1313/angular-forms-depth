@@ -6,11 +6,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { DynamicControl, DynamicFormConfig } from '../models/dynamic-forms.models';
 import { banWords } from '../../reactive-forms/validators/ban-word.validator';
 import { DynamicControlResolver } from '../dynamic-control-resolver.service';
+import { ControlInjectorPipe } from '../control-injector.pipe';
 
 @Component({
   selector: 'app-dynamic-forms-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ControlInjectorPipe],
   templateUrl: './dynamic-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',

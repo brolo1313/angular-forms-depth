@@ -1,17 +1,21 @@
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CONTROL_DATA } from '../control-data.token';
 
 @Component({
   selector: 'app-dynamic-input',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <p>
-      dynamic-input works!
-    </p>
+    <input [value]="control.config.value" [id]="control.controlKey" [type]="control.config.type">
   `,
   styles: [
   ]
 })
-export class DynamicInputComponent   {
+export class DynamicInputComponent implements OnInit {
+
+  control = inject(CONTROL_DATA);
+
+  ngOnInit(): void {
+  }
 }

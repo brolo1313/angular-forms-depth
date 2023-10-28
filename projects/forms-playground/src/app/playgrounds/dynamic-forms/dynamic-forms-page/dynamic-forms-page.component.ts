@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DynamicControl, DynamicFormConfig } from '../models/dynamic-forms.models';
 import { banWords } from '../../reactive-forms/validators/ban-word.validator';
+import { DynamicControlResolver } from '../dynamic-control-resolver.service';
 
 @Component({
   selector: 'app-dynamic-forms-page',
@@ -25,7 +26,7 @@ export class DynamicFormsPageComponent implements OnInit {
   protected formLoadingTrigger = new Subject<'user' | 'company'>();
   protected formConfig$!: Observable<DynamicFormConfig>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, protected controlResolver: DynamicControlResolver) { }
 
   ngOnInit(): void {
     this.formConfig$ = this.formLoadingTrigger.pipe(

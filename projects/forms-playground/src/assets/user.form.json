@@ -17,7 +17,7 @@
       "controlType": "input",
       "type": "email",
       "label": "Email",
-      "value": "",
+      "value": "brolo13@gmai.com",
       "order": 1,
       "validators": {
         "email": true

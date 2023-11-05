@@ -1,21 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CONTROL_DATA } from '../control-data.token';
+import { ControlContainer, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
+import { BaseDynamicControl } from './base-dynamic-control';
 
 @Component({
   selector: 'app-dynamic-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <input [value]="control.config.value" [id]="control.controlKey" [type]="control.config.type">
-  `,
+  <ng-container [formGroup]="formGroup">
+    <input [formControlName]="control.controlKey" [value]="control.config.value" [id]="control.controlKey" [type]="control.config.type">
+  </ng-container>
+`,
   styles: [
-  ]
+  ],
+  providers: [FormGroupDirective]
 })
-export class DynamicInputComponent implements OnInit {
-
-  control = inject(CONTROL_DATA);
-
-  ngOnInit(): void {
-  }
+export class DynamicInputComponent extends BaseDynamicControl {
 }

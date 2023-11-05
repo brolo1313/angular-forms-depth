@@ -15,7 +15,7 @@ import { DynamicControlResolver } from '../dynamic-control-resolver.service';
         <legend>{{control.config.label}}</legend>
         <ng-container *ngFor="let control of control.config.controls | keyvalue" class="form-field">
           <ng-container
-            [ngComponentOutlet]="controlResolver.resolve(control.value.controlType)"
+            [ngComponentOutlet]="controlResolver.resolve(control.value.controlType) | async"
             [ngComponentOutletInjector]="control.key | controlInjector:control.value">
           </ng-container>
         </ng-container>

@@ -13,21 +13,12 @@
       *ngFor="let control of formConfig.controls | keyvalue"
       class="form-field"
     >
-      <label [for]="control.key">{{ control.value.label }}</label>
       <ng-container
         [ngComponentOutlet]="controlResolver.resolve(control.value.controlType)"
         [ngComponentOutletInjector]="
           control.key | controlInjector : control.value
         "
       ></ng-container>
-      <!-- <ng-container [ngSwitch]="control.value.controlType">
-          <input *ngSwitchCase="'input'" [formControlName]="control.key" [value]="control.value.value" [id]="control.key" [type]="control.value.type">
-          <ng-container *ngSwitchCase="'select'">
-            <select [formControlName]="control.key" [id]="control.key" [value]="control.value.value">
-              <option *ngFor="let option of control.value.options" [value]="option.value">{{option.label}}</option>
-            </select>
-          </ng-container>
-        </ng-container> -->
       <div
         *ngIf="
           form.get(control.key)?.dirty &&

@@ -7,6 +7,7 @@ import { DynamicControl, DynamicFormConfig } from '../models/dynamic-forms.model
 import { banWords } from '../../reactive-forms/validators/ban-word.validator';
 import { DynamicControlResolver } from '../dynamic-control-resolver.service';
 import { ControlInjectorPipe } from '../control-injector.pipe';
+import { comparatorFn } from '../dynamic-controls/base-dynamic-control';
 
 @Component({
   selector: 'app-dynamic-forms-page',
@@ -23,6 +24,8 @@ export class DynamicFormsPageComponent implements OnInit {
 
 
   form!: FormGroup;
+  
+  protected comparatorFn = comparatorFn;
 
   protected formLoadingTrigger = new Subject<'user' | 'company'>();
   protected formConfig$!: Observable<DynamicFormConfig>;

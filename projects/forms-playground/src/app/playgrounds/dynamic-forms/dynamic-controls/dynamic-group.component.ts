@@ -1,6 +1,6 @@
 import { Component, HostBinding, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BaseDynamicControl } from './base-dynamic-control';
+import { BaseDynamicControl, dynamicControlProvider } from './base-dynamic-control';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ControlInjectorPipe } from '../control-injector.pipe';
 import { DynamicControlResolver } from '../dynamic-control-resolver.service';
@@ -10,7 +10,6 @@ import { DynamicControlResolver } from '../dynamic-control-resolver.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ControlInjectorPipe],
   template: `
-    <ng-container [formGroup]="formGroup">
       <fieldset [formGroupName]="control.controlKey">
         <legend>{{control.config.label}}</legend>
         <ng-container *ngFor="let control of control.config.controls | keyvalue" class="form-field">
@@ -20,10 +19,10 @@ import { DynamicControlResolver } from '../dynamic-control-resolver.service';
           </ng-container>
         </ng-container>
       </fieldset>
-    </ng-container>
   `,
   styles: [
-  ]
+  ],
+  viewProviders: [dynamicControlProvider],
 })
 export class DynamicGroupComponent extends BaseDynamicControl {
   @HostBinding('class') override hostClass = 'form-field-group';

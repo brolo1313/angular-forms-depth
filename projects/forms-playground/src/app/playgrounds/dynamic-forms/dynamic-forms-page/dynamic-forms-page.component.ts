@@ -8,11 +8,12 @@ import { banWords } from '../../reactive-forms/validators/ban-word.validator';
 import { DynamicControlResolver } from '../dynamic-control-resolver.service';
 import { ControlInjectorPipe } from '../control-injector.pipe';
 import { comparatorFn } from '../dynamic-controls/base-dynamic-control';
+import { InputErrorComponent } from '../../../core/input-error/input-error-message.component';
 
 @Component({
   selector: 'app-dynamic-forms-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ControlInjectorPipe],
+  imports: [CommonModule, ReactiveFormsModule, ControlInjectorPipe, InputErrorComponent],
   templateUrl: './dynamic-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',

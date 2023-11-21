@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES, VALIDATION_ERROR_MESSAGES } from './../../../core/input-error/validation-error-message.token';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,17 +7,23 @@ import { UserSkillsService } from '../../../core/user-skills.service';
 import { banWords } from '../validators/ban-word.validator';
 import { passwordShouldMatch } from '../validators/password-match.validator';
 import { UniqueNicknameValidator } from '../validators/uniq-name.validator';
+import { InputErrorComponent } from '../../../core/input-error/input-error-message.component';
 
 @Component({
   selector: 'app-reactive-forms-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, InputErrorComponent],
   templateUrl: './reactive-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',
     '../../common-form.scss',
     './reactive-forms-page.component.scss'
   ],
+  providers: [
+    {
+      provide: VALIDATION_ERROR_MESSAGES,
+      useValue:{...ERROR_MESSAGES, minlength: 'another min length hint' }
+    }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReactiveFormsPageComponent implements OnInit {
